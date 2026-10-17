@@ -1,6 +1,6 @@
 import { Container } from '@mantine/core'
 
-export default function User() {
+export default function Users() {
   return (
     <Container>
       User
