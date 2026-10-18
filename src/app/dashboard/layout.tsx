@@ -1,13 +1,12 @@
 "use client"
 
 import { useRouter, usePathname } from 'next/navigation'
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import {
   AppShell,
   Group,
   Stack,
   Text,
-  Title,
   TextInput,
   ActionIcon,
   Badge,
@@ -15,8 +14,6 @@ import {
   Menu,
   UnstyledButton,
   Paper,
-  Table,
-  Grid,
   ThemeIcon,
   Indicator,
   Burger,
@@ -30,70 +27,42 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import {
   LayoutDashboard,
-  FolderKanban,
-  FileText,
-  Ticket,
-  BarChart3,
   Settings,
   Search,
   Bell,
   Sun,
   Moon,
-  ChevronRight,
-  TrendingUp,
-  TrendingDown,
-  Plus,
-  Building2,
-  DollarSign,
-  Briefcase,
-  Zap,
-  Activity,
   CheckCircle2,
   AlertTriangle,
   LogOut,
   User,
   Users,
+  Building2,
 } from 'lucide-react';
-import { useCallback } from 'react'
-
-//todo continue learning
 
 const NAV_ITEMS = [
-  { label: 'Overview', icon: LayoutDashboard, badge: null, active: true, to: "/dashboard" },
-  { label: 'Users', icon: Users, badge: null, active: false, to: '/dashboard/users' },
-  { label: 'Settings', icon: Settings, badge: null, active: false, to: '/dashboard/settings' },
-  // { label: 'Projects', icon: FolderKanban, badge: '12' },
-  // { label: 'Daily Reports', icon: FileText, badge: null },
-  // { label: 'Gate Passes', icon: Ticket, badge: '5 New' },
-  // { label: 'Analytics', icon: BarChart3, badge: 'Pro' },
-  // { label: 'Settings', icon: Settings, badge: null },
+  { label: 'Overview', icon: LayoutDashboard, badge: null, to: "/dashboard" },
+  { label: 'Users', icon: Users, badge: null, to: '/dashboard/users' },
+  { label: 'Settings', icon: Settings, badge: null, to: '/dashboard/settings' },
 ];
 
 interface DashboardProps {
   children: React.ReactNode
 }
 
-export default function Dashboard({ children } : DashboardProps) {
+export default function Dashboard({ children }: DashboardProps) {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-  const [activeTab, setActiveTab] = useState('Overview');
   const { colorScheme, setColorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
-  const router = useRouter()
-  const pathname = usePathname()
-
-  useEffect(() => {
-    console.log(pathname)
-
-
-  }, [pathname])
+  const router = useRouter();
+  const pathname = usePathname();
 
   const isDark = colorScheme === 'dark';
 
-  const handleNavigate = useCallback((itemLabel: string, to: string) => {
-    setActiveTab(itemLabel)
+  const handleNavigate = useCallback((to: string) => {
     router.push(to);
-  }, [router])
+  }, [router]);
 
   return (
     <AppShell
@@ -111,7 +80,6 @@ export default function Dashboard({ children } : DashboardProps) {
         },
       }}
     >
-      {}
       <AppShell.Header p="md" bd={isDark ? '1px solid var(--mantine-color-dark-6)' : '1px solid var(--mantine-color-gray-3)'}>
         <Group h="100%" justify="space-between">
           <Group>
@@ -188,10 +156,8 @@ export default function Dashboard({ children } : DashboardProps) {
         </Group>
       </AppShell.Header>
 
-      {}
       <AppShell.Navbar p="xs" bd={isDark ? '1px solid var(--mantine-color-dark-6)' : '1px solid var(--mantine-color-gray-3)'}>
         <AppShell.Section grow>
-          {/* Workspace Info Header */}
           <Paper
             p="xs"
             mb="md"
@@ -216,7 +182,6 @@ export default function Dashboard({ children } : DashboardProps) {
             </Group>
           </Paper>
 
-          {/* Navigation Links */}
           <Stack gap={4}>
             {desktopOpened && (
               <Text size="xs" fw={700} c="dimmed" tt="uppercase" px="xs" mb={4}>
@@ -225,7 +190,8 @@ export default function Dashboard({ children } : DashboardProps) {
             )}
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
-              const isActive = activeTab === item.label;
+              // Check exact path match or nested route match (e.g., /dashboard/settings/account)
+              const isActive = pathname === item.to || (item.to !== '/dashboard' && pathname.startsWith(item.to));
 
               return (
                 <NavLink
@@ -240,7 +206,7 @@ export default function Dashboard({ children } : DashboardProps) {
                     ) : null
                   }
                   active={isActive}
-                  onClick={() => handleNavigate(item.label, item.to)}
+                  onClick={() => handleNavigate(item.to)}
                   radius="md"
                   variant="light"
                   style={{
@@ -252,7 +218,6 @@ export default function Dashboard({ children } : DashboardProps) {
           </Stack>
         </AppShell.Section>
 
-        {/* User Footer Profile */}
         <AppShell.Section pt="xs" style={{ borderTop: isDark ? '1px solid var(--mantine-color-dark-6)' : '1px solid var(--mantine-color-gray-3)' }}>
           <Group gap="xs" wrap="nowrap">
             <Indicator color="green" size={8} offset={2} position="bottom-end">
@@ -273,10 +238,10 @@ export default function Dashboard({ children } : DashboardProps) {
           </Group>
         </AppShell.Section>
       </AppShell.Navbar>
+
       <AppShell.Main>
         {children}
       </AppShell.Main>
-
     </AppShell>
   );
 }

@@ -13,9 +13,9 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   const pathname = usePathname()
   const router = useRouter()
 
-  // Define your settings tab configuration
+  // Defin your settings tab configuration
   const tabs = [
-    { label: 'Menu', value: '/dashboard/settings/menu' },
+    { label: 'Menu Items', value: '/dashboard/settings/menu' },
   ]
 
   // Find the matching tab path (handles exact path or active sub-paths)
