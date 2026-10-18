@@ -61,6 +61,7 @@ import { useCallback } from 'react'
 const NAV_ITEMS = [
   { label: 'Overview', icon: LayoutDashboard, badge: null, active: true, to: "/dashboard" },
   { label: 'Users', icon: Users, badge: null, active: false, to: '/dashboard/users' },
+  { label: 'Settings', icon: Settings, badge: null, active: false, to: '/dashboard/settings' },
   // { label: 'Projects', icon: FolderKanban, badge: '12' },
   // { label: 'Daily Reports', icon: FileText, badge: null },
   // { label: 'Gate Passes', icon: Ticket, badge: '5 New' },

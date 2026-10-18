@@ -1,4 +1,5 @@
 'use client'
+import { PageHeader } from '@/components/PageHeader';
 import {
   Group,
   Stack,
@@ -80,22 +81,7 @@ export default function Dashboard() {
   return (
     <Stack gap="lg">
       {/* Dashboard Header Bar */}
-      <Group justify="space-between" align="center">
-        <Box>
-          <Text size="xs" c="dimmed">
-            {/* Dashboard / <Text span c="blue" fw={500}>{activeTab}</Text> */}
-          </Text>
-          <Title order={2} size="h3" fw={700}>
-            {/* {activeTab} Overview */}
-          </Title>
-        </Box>
-
-        <Group gap="xs">
-          <ActionIcon variant="light" size="lg" radius="md">
-            <Plus size={18} />
-          </ActionIcon>
-        </Group>
-      </Group>
+      <PageHeader title='Dashboard' />
 
       {}
       <Grid>
