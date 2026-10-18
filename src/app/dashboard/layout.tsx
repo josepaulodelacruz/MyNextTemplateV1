@@ -64,6 +64,10 @@ export default function Dashboard({ children }: DashboardProps) {
     router.push(to);
   }, [router]);
 
+  const handleLogoutEvent = useCallback(() => {
+
+  }, [])
+
   return (
     <AppShell
       header={{ height: 64 }}
@@ -147,7 +151,7 @@ export default function Dashboard({ children }: DashboardProps) {
                 <Menu.Item leftSection={<User size={14} />}>Profile</Menu.Item>
                 <Menu.Item leftSection={<Settings size={14} />}>Account Settings</Menu.Item>
                 <Menu.Divider />
-                <Menu.Item color="red" leftSection={<LogOut size={14} />}>
+                <Menu.Item onClick={handleLogoutEvent} color="red" leftSection={<LogOut size={14} />}>
                   Log out
                 </Menu.Item>
               </Menu.Dropdown>
